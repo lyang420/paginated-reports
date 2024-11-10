@@ -80,4 +80,17 @@ test('verify chart and table renders', async ({ page }) => {
 	await expect(page.getByRole('main')).toContainText('Changeover');
 	await expect(page.getByRole('main')).toContainText('Meeting');
 	await expect(page.getByRole('main')).toContainText('Duration (hours');
- });
+});
+
+test('verify PDF and print', async ({ page }) => {
+	/* Most interesting part: clicking 'Print' allows user to manually select the
+	'Save to PDF' option, however, when trying to save or generate a PDF (either
+	manually or by test), the page reveals an 'Invalid URL' notice. */
+	await page.goto('http://localhost:3000/');
+	await page.getByRole('button', { name: 'Download PDF' }).click();
+	await page.getByRole('button', { name: 'Print Report' }).click();
+	page.once('dialog', dialog => {
+		console.log(`Dialog message: ${dialog.message()}`);
+		dialog.dismiss().catch(() => {});
+	});
+});
