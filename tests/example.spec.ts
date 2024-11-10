@@ -50,3 +50,34 @@ test('verify device filtering', async ({ page }) => {
 	await expect(page.getByText('Ender Production Report')).toBeVisible();
 	await expect(page.getByText('Prusa Production Report')).toBeVisible();
 });
+
+test('verify chart and table renders', async ({ page }) => {
+	/* Verifies UI display of table based on provided default data, as well as
+	scale and title of chart (numbers will have to be verified using access to
+	database). This test focuses specifically on the provided numbers for
+	MakerBot Production Report, scale for the other two if needed. */
+	await page.goto('http://localhost:3000/');
+
+	await page.getByLabel('MakerBot').check();
+	await expect(page.locator('div').filter({ hasText: /^MakerBot Production ReportOct 27, 2024 - Oct 29, 2024$/ }).first()).toBeVisible();
+	await expect(page.getByRole('cell', { name: 'Process State' }).first()).toBeVisible();
+	await expect(page.getByRole('cell', { name: 'Good Count' }).first()).toBeVisible();
+	await expect(page.getByRole('cell', { name: 'Reject Count' }).first()).toBeVisible();
+	await expect(page.getByRole('cell', { name: 'duration (hrs)' }).first()).toBeVisible();
+
+	await expect(page.getByRole('row', { name: 'Down 0 11 4.73' }).getByRole('cell').nth(1)).toBeVisible();
+	await expect(page.getByRole('row', { name: 'Running 63,313 1,700 31.56' }).getByRole('cell').nth(1)).toBeVisible();
+	await expect(page.getByRole('row', { name: 'Meal/Break 743 0 5.56' }).getByRole('cell').nth(1)).toBeVisible();
+	await expect(page.getByRole('row', { name: 'Changeover 0 0 1.93' }).getByRole('cell').nth(1)).toBeVisible();
+	await expect(page.getByRole('row', { name: 'Meeting 2 0 0.13' }).getByRole('cell').nth(1)).toBeVisible();
+
+	await expect(page.getByRole('heading', { name: 'Production Overview' }).first()).toBeVisible();
+	await expect(page.locator('svg').filter({ hasText: 'DownRunningMeal/' })).toBeVisible();
+	await expect(page.getByRole('main')).toContainText('Count');
+	await expect(page.getByRole('main')).toContainText('Down');
+	await expect(page.getByRole('main')).toContainText('Running');
+	await expect(page.getByRole('main')).toContainText('Meal/Break');
+	await expect(page.getByRole('main')).toContainText('Changeover');
+	await expect(page.getByRole('main')).toContainText('Meeting');
+	await expect(page.getByRole('main')).toContainText('Duration (hours');
+ });
