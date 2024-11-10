@@ -38,6 +38,8 @@ test('verify date filtering for URL', async ({ page }) => {
 });
 
 test('verify device filtering', async ({ page }) => {
+	/* This covers basic checkbox function, if you have time and really want to
+	be thorough, consider different permutations / filtering options... */
 	await page.goto('http://localhost:3000/');
 	await page.getByLabel('MakerBot').check();
 	await expect(page.getByText('MakerBot Production Report')).toBeVisible();
