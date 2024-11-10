@@ -31,8 +31,20 @@ test('verify date filtering for URL', async ({ page }) => {
 
 	const startDate = page.locator('div').filter({ hasText: /^Start Date$/ }).getByRole('textbox');
 	const endDate = page.locator('div').filter({ hasText: /^End Date$/ }).getByRole('textbox');
-	
+
 	await expect(startDate).toHaveValue('2024-11-01');
 	await expect(endDate).toHaveValue('2024-11-05');
 	await expect(page.getByRole('main')).toContainText('Nov 1, 2024 - Nov 5, 2024');
+});
+
+test('verify device filtering', async ({ page }) => {
+	await page.goto('http://localhost:3000/');
+	await page.getByLabel('MakerBot').check();
+	await expect(page.getByText('MakerBot Production Report')).toBeVisible();
+	await expect(page.getByText('Ender Production Report')).not.toBeVisible();
+	await expect(page.getByText('Prusa Production Report')).not.toBeVisible();
+	await page.getByLabel('MakerBot').uncheck();
+	await expect(page.getByText('MakerBot Production Report')).toBeVisible();
+	await expect(page.getByText('Ender Production Report')).toBeVisible();
+	await expect(page.getByText('Prusa Production Report')).toBeVisible();
 });
