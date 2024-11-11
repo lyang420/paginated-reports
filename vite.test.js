@@ -1,5 +1,6 @@
 import { test, expect } from 'vitest';
 import { parseDateString, tryParseDateString } from './src/lib/utils.ts';
+import { getDeviceChartData } from './src/components/ProductionReport.tsx';
 
 test('parseDateString default', () => {
    const dateString = '2024-10-27';
@@ -21,4 +22,16 @@ test('tryParseDateString invalid', () => {
    const invalidDateString = 'invalid-date';
    const result = tryParseDateString(invalidDateString);
    expect(result).toBeNull();
+});
+
+test('getDeviceChartDaata', () => {
+	const summary = {
+		"Up": { good: 100, bad: 20, duration: 1080 },
+		"Down": { good: 20, bad: 10, duration: 900 }
+	};
+	const chartData = getDeviceChartData(summary);
+	expect(chartData).toEqual([
+		{ state: 'Up', good: 100, bad: 20, duration: 0.30 },
+		{ state: 'Down', good: 20, bad: 10, duration: 0.25 }
+	]);
 });
