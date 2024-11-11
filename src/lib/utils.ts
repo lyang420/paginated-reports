@@ -6,7 +6,18 @@ export function cn(...inputs: ClassValue[]) {
    return twMerge(clsx(inputs));
 }
 
+const regex = /^(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}\.\d{7}) ([+-]\d{2}:\d{2})$/;
+
 export function tryParseDateString(dateStr: string): Date | null {
+	const match = dateStr.match(regex);
+	if (match) {
+		const [, date, time, timezone] = match;
+		const isoDateStr = `${date}T${time}${timezone}`;
+		const parsedDate = new Date(isoDateStr);
+		if (isValid(parsedDate)) {
+			return parsedDate;
+		}
+	}
    const formats = [
       "yyyy-MM-dd",
       "MM/dd/yyyy",

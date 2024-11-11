@@ -23,9 +23,10 @@ export function ProductionReport() {
     const searchParams = useSearchParams();
     const [selectedDevices, setSelectedDevices] = useState<string[]>([]);
     const [startDate, setStartDate] = useState(
-        startOfDay(new Date("10-27-2024"))
+			// YESSSSSSSSSSS
+        startOfDay(parseDateString("10-27-2024"))
     );
-    const [endDate, setEndDate] = useState(endOfDay(new Date("10-29-2024")));
+    const [endDate, setEndDate] = useState(endOfDay(parseDateString("10-29-2024")));
     const [isGenerating, setIsGenerating] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
 
