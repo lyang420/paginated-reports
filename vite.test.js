@@ -24,7 +24,7 @@ test('tryParseDateString invalid', () => {
    expect(result).toBeNull();
 });
 
-test('getDeviceChartDaata', () => {
+test('getDeviceChartData', () => {
 	const summary = {
 		"Up": { good: 100, bad: 20, duration: 1080 },
 		"Down": { good: 20, bad: 10, duration: 900 }
