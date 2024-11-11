@@ -7,10 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test:unit": "vitest vite.test.js",
-    "test:e2e": "npx playwright test",
-    "test:coverage": "vite test --coverage",
-    "build": "vite build"  
+    "test": "npm run dev:test",
+    "dev:test": "npm run dev & npx wait-on http://localhost:3000 && npx playwright test"
   },
   "dependencies": {
     "@radix-ui/react-icons": "^1.3.0",
