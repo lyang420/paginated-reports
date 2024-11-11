@@ -32,7 +32,7 @@ jobs:
 
       - name: Run unit tests
         run: |
-          npx vitest run
+          npm run test
 
       - name: Run Playwright tests
         run: |
