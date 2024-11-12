@@ -22,7 +22,7 @@ jobs:
         run: |
           sudo npx playwright install-deps
           npx playwright install
-          npx playwright test
+          npx playwright test --workers=3
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:

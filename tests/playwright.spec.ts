@@ -7,6 +7,11 @@ page to launch before running tests, otherwise tests will access a blank
 localhost port and fail. */
 
 import { test, expect } from '@playwright/test';
+import { defineConfig } from '@playwright/test';
+
+export default defineConfig({
+	workers: 3
+});
 
 test('verify date filtering for UI', async ({ page }) => {
 	await page.goto('http://localhost:3000/');
