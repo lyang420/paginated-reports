@@ -37,6 +37,7 @@ export async function POST(req: NextRequest) {
         // Wait for content to be rendered
         await page.evaluate(() => {
             return new Promise((resolve) => {
+					setTimeout(resolve, 3000);
                 // First check if content is already there
                 const tables = document.querySelectorAll("table");
                 const rows = document.querySelectorAll("tbody tr");
