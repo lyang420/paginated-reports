@@ -10,7 +10,7 @@ import { test, expect } from '@playwright/test';
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
-	workers: 3,
+	workers: 5,
 	timeout: 60000,
 	use: {
 		actionTimeout: 60000
