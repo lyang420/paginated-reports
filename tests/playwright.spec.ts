@@ -10,7 +10,7 @@ import { test, expect } from '@playwright/test';
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
-	workers: 3
+	workers: 2
 });
 
 test('verify date filtering for UI', async ({ page }) => {
