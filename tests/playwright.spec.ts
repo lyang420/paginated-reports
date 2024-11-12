@@ -93,12 +93,11 @@ test('verify chart and table renders', async ({ page }) => {
 
 test('verify PDF and print', async ({ page }) => {
 	await page.goto('http://localhost:3000/');
-	await page.getByRole('button', { name: 'Download PDF' }).click();
+	const downloadButton = page.getByRole('button', { name: 'Download PDF' });
+	const downloadPromise = page.waitForEvent('download');
 
-	const downloadPromise = page.waitForEvent('download', { timeout: 60000 });
+	await downloadButton.click();
 	const download = await downloadPromise;
-	console.log(`Starting download: ${download}`);
-	const pdfPath = download.path;
-	console.log('Download path: ${pdfPath');
-	expect(pdfPath);
+
+	await expect(download.suggestedFilename()).toMatch(/production-report-.*\.pdf/);
 });
