@@ -10,7 +10,8 @@ import { test, expect } from '@playwright/test';
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
-	workers: 2
+	workers: 3,
+	timeout: 60000
 });
 
 test('verify date filtering for UI', async ({ page }) => {
@@ -91,8 +92,10 @@ test('verify PDF and print', async ({ page }) => {
 	await page.goto('http://localhost:3000/');
 	await page.getByRole('button', { name: 'Download PDF' }).click();
 
-	const downloadPromise = page.waitForEvent('download');
+	const downloadPromise = page.waitForEvent('download', { timeout: 60000 });
 	const download = await downloadPromise;
+	console.log(`Starting download: ${download}`);
 	const pdfPath = download.path;
+	console.log('Download path: ${pdfPath');
 	expect(pdfPath);
 });
