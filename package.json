@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "vitest vite.test.js"
+    "test": "vitest src/tests/vite.test.ts"
   },
   "dependencies": {
     "@radix-ui/react-icons": "^1.3.0",
