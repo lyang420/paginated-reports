@@ -7,15 +7,7 @@ page to launch before running tests, otherwise tests will access a blank
 localhost port and fail. */
 
 import { test, expect } from '@playwright/test';
-import { defineConfig } from '@playwright/test';
-
-export default defineConfig({
-	workers: 5,
-	timeout: 60000,
-	use: {
-		actionTimeout: 60000
-	}
-});
+import { chromium } from 'playwright';
 
 test('verify date filtering for UI', async ({ page }) => {
 	await page.goto('http://localhost:3000/');
@@ -91,15 +83,15 @@ test('verify chart and table renders', async ({ page }) => {
 	await expect(page.getByRole('main')).toContainText('Duration (hours');
 });
 
-test('verify PDF and print', async ({ page }) => {
+test('verify PDF and print', async () => {
+	const browser = await chromium.launch({ headless: true });
+	const page = await browser.newPage({ acceptDownloads: true });
 	await page.goto('http://localhost:3000/');
-	await page.waitForLoadState('load');
-	const downloadButton = page.getByRole('button', { name: 'Download PDF' });
-	const downloadPromise = page.waitForEvent('download', { timeout: 60000 });
 
-	await downloadButton.click();
-	const download = await downloadPromise;
-	const pdfPath = download.path;
+	const [download] = await Promise.all([
+		page.waitForEvent('download'),
+		page.getByRole('button', { name: 'Download PDF' }).click()
+	]);
 
-	expect(pdfPath);
+	expect(download.path);
 });
