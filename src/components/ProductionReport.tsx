@@ -99,6 +99,10 @@ export function ProductionReport() {
             });
     }, [devices, selectedDevices, startDate, endDate, isLoaded]);
 
+	 if (!isLoaded) {
+		return <div> Loading... </div>;
+	 }
+
     const handleDateChange = (date: string, isStart: boolean) => {
         console.log("date", date);
 
