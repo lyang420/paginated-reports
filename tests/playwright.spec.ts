@@ -11,7 +11,10 @@ import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
 	workers: 3,
-	timeout: 60000
+	timeout: 60000,
+	use: {
+		actionTimeout: 60000
+	}
 });
 
 test('verify date filtering for UI', async ({ page }) => {
