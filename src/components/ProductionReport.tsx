@@ -8,6 +8,7 @@ import { endOfDay, format, isValid, startOfDay } from "date-fns";
 import { Download, Printer } from "lucide-react";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
+import { Suspense } from "react";
 import {
     Bar,
     CartesianGrid,
@@ -175,6 +176,7 @@ export function ProductionReport() {
     }
 
     return (
+		<Suspense fallback={<div>Loading...</div>}>
         <div className="p-8 bg-white">
             {/* Filters */}
             <div className="mb-8 print:hidden">
@@ -428,5 +430,6 @@ export function ProductionReport() {
                 </Button>
             </div>
         </div>
+		</Suspense>
     );
 }
