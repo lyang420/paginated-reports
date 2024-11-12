@@ -20,6 +20,14 @@ import {
     YAxis,
 } from "recharts";
 
+export function Layout() {
+	return (
+		<Suspense fallback={<div>Loading...</div>}>
+			<ProductionReport />
+		</Suspense>
+	);
+}
+
 export function ProductionReport() {
     const searchParams = useSearchParams();
     const [selectedDevices, setSelectedDevices] = useState<string[]>([]);
