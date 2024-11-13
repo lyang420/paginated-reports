@@ -20,6 +20,20 @@ import {
     YAxis,
 } from "recharts";
 
+export const getDeviceChartData = (
+	summary: Record<
+		 string,
+		 { good: number; reject: number; duration: number }
+	>
+) => {
+	return Object.entries(summary).map(([state, data]) => ({
+		 state,
+		 good: Math.round(data.good),
+		 reject: Math.round(data.reject),
+		 duration: Number((data.duration / 3600).toFixed(2)), // Convert to hours
+	}));
+};
+
 export function Layout() {
 	return (
 		<Suspense fallback={<div>Loading...</div>}>
