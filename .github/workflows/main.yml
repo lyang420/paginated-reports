@@ -21,23 +21,15 @@ jobs:
           npm run dev &
           npx wait-on http://localhost:3000
       - name: Run Vitest unit tests
-        run: npm run test -- --coverage
+        run: npm run test
       - name: Run Playwright functionality tests
         run: |
           sudo npx playwright install-deps
           npx playwright install
-          npx playwright test --workers=3 --project=playwright-coverage
+          npx playwright test --workers=3
       - name : Perform build check
         run: npm run build
-      - name: Generate test coverage report
-        run: npx c8 report --report=lcov > coverage.lcov
-      - name: Upload test coverage reports
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-report
-          path: coverage.lcov
-          retention-days: 30
-      - name: Upload Playwright test report
+      - name: Upload test coverage report
         uses: actions/upload-artifact@v4
         with:
           name: playwright-report
