@@ -17,6 +17,8 @@ import { Bar,
 			XAxis,
 			YAxis, } from "recharts";
 
+/* `getDeviceChartData()`, an inner function used further below, is duplicated
+and exported here for utility testing purposes. */
 export const getDeviceChartData = (
 	summary: Record < 
 		string,
@@ -31,6 +33,8 @@ export const getDeviceChartData = (
 	}));
 };
 
+/* The inclusion of this function wraps the entire ProductionReport module in a
+<Suspense/>, which is necessary for the Node build to finish successfully. */
 export function Layout() {
 	return (
 		< Suspense fallback = { <div> Loading... </div> } >
@@ -42,12 +46,19 @@ export function Layout() {
 export function ProductionReport() {
    const searchParams = useSearchParams();
    const [selectedDevices, setSelectedDevices] = useState<string[]>([]);
+
+	/* Critical fix: Do NOT call the `Date()` function here; leave that for the
+	utility function `parseDate()` later. Doing so here will result in a slight
+	discrepancy in ISO format, potentially breaking the application on WebKit
+	(Safari). */
+
    const [startDate, setStartDate] = useState (
       startOfDay(parseDateString("10-27-2024"))
    );
    const [endDate, setEndDate] = useState (
 		endOfDay(parseDateString("10-29-2024"))
 	);
+
    const [isGenerating, setIsGenerating] = useState(false);
    const [isLoaded, setIsLoaded] = useState(false);
    useEffect(() => {
