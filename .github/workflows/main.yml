@@ -9,9 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository under $GITHUB_WORKSPACE
-      - uses: actions/checkout@v4
+        uses: actions/checkout@v4
       - name: Set up GitHub Actions workflow
-      - uses: actions/setup-node@v4
+        uses: actions/setup-node@v4
         with:
           node-version: '18'
       - name: Install dependencies
@@ -32,7 +32,7 @@ jobs:
       - name: Generate test coverage report
         run: npx c8 report --report=lcov > coverage.lcov
       - name: Upload test coverage reports
-      - uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4
         with:
           name: coverage-report
           path: coverage.lcov
