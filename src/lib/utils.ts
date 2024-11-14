@@ -1,11 +1,13 @@
 import { clsx, type ClassValue } from "clsx";
-import { isValid, parse } from "date-fns";
-import { twMerge } from "tailwind-merge";
+import { isValid, parse        } from "date-fns";
+import { twMerge               } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
    return twMerge(clsx(inputs));
 }
 
+/* I wrote this regular expression to account for a very specific kind of ISO
+format Dates are transformed into that apparently Safari has a problem with. */
 const regex = /^(\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}\.\d{7}) ([+-]\d{2}:\d{2})$/;
 
 export function tryParseDateString(dateStr: string): Date | null {
