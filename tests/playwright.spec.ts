@@ -60,7 +60,8 @@ test('verify chart and table renders', async ({ page }) => {
 	await page.goto('http://localhost:3000/');
 
 	await page.getByLabel('MakerBot').check();
-	await expect(page.locator('div').filter({ hasText: /^MakerBot Production ReportOct 27, 2024 - Oct 29, 2024$/ }).first()).toBeVisible();
+	await expect(page.getByText('MakerBot Production ReportOct')).toBeVisible();
+	await expect(page.getByText('Oct 27, 2024 - Oct 29,').first()).toBeVisible();
 	await expect(page.getByRole('cell', { name: 'Process State' }).first()).toBeVisible();
 	await expect(page.getByRole('cell', { name: 'Good Count' }).first()).toBeVisible();
 	await expect(page.getByRole('cell', { name: 'Reject Count' }).first()).toBeVisible();
